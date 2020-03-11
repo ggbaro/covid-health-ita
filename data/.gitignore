@@ -1,0 +1,3 @@
+raw/*
+prepped/*/
+!prepped/istat/
