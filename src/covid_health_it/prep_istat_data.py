@@ -40,7 +40,7 @@ def parse_data(population_df):
         "Gender": "gender",
         "Age": "age",
         "Marital status	": "marital_status",
-        "Value": "population_df",
+        "Value": "population",
     }
     population_df = population_df.rename(columns=col_names)
 
@@ -68,6 +68,7 @@ def parse_istat_csv(source_csv_fp, out_fp):
     data.to_csv(out_fp, index=False)
 
 
+cli.add_command(parse_istat_csv)
+
 if __name__ == "__main__":
-    cli.add_command(parse_istat_csv)
     cli()
