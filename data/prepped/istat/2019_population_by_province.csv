@@ -1,4 +1,4 @@
-denominazione_provincia,gender,age,population,gender_mult
+denominazione_provincia,gender,age,population_df,gender_mult
 Torino,males,0,7638,-1
 Torino,females,0,7384,1
 Vercelli,males,0,512,-1
