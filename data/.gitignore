@@ -1,3 +1,4 @@
 raw/*
 prepped/*/
 !prepped/istat/
+!prepped/ministero-salute/
