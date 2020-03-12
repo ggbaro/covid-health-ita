@@ -4,10 +4,8 @@ import requests
 import csv
 import pandas as pd
 
-
-@click.group()
-def cli():
-    pass
+from .transcoding.names_map import col_names
+from .transcoding.metadata import dtype
 
 
 def download_salutegov_csv(url):
@@ -18,57 +16,22 @@ def download_salutegov_csv(url):
     return data
 
 
-def posti_letto_from_salutegov():
-    url_posti_letto = "http://www.dati.salute.gov.it/imgs/C_17_dataset_18_0_upFile.csv"
+# url_posti_letto = "http://www.dati.salute.gov.it/imgs/C_17_dataset_18_0_upFile.csv"
+url_posti_letto = "http://www.dati.salute.gov.it/imgs/C_17_dataset_96_0_upFile.csv"
+# url_hospital_metadata = "http://www.dati.salute.gov.it/imgs/C_17_dataset_2_0_upFile.csv"
 
-    dtype = {
-        "Anno": int,
-        "Codice Regione": str,
-        "Descrizione Regione": str,
-        "Codice Azienda": str,
-        "Tipo Azienda": str,
-        "Codice struttura": str,
-        "Denominazione struttura": str,
-        "Indirizzo": str,
-        "Codice Comune": str,
-        "Comune": str,
-        "Sigla provincia": str,
-        "Codice tipo struttura": str,
-        "Descrizione tipo struttura": str,
-        "Tipo di Disciplina": str,
-        "Posti letto degenza ordinaria": int,
-        "Posti letto degenza a pagamento": int,
-        "Posti letto Day Hospital": int,
-        "Posti letto Day Surgery": int,
-        "Totale posti letto": int,
-    }
 
-    stringlike = [
-        "Codice Regione",
-        "Descrizione Regione",
-        "Codice Azienda",
-        "Tipo Azienda",
-        "Codice struttura",
-        "Denominazione struttura",
-        "Indirizzo",
-        "Codice Comune",
-        "Comune",
-        "Sigla provincia",
-        "Codice tipo struttura",
-        "Descrizione tipo struttura",
-        "Tipo di Disciplina",
-    ]
-
-    numlike = [
-        "Posti letto degenza ordinaria",
-        "Posti letto degenza a pagamento",
-        "Posti letto Day Hospital",
-        "Posti letto Day Surgery",
-        "Totale posti letto",
-    ]
+def parse_posti_letto(url_posti_letto=url_posti_letto, verbose=0, dtype=dtype):
 
     # Retrieve and read file
     posti_letto = pd.DataFrame(download_salutegov_csv(url_posti_letto))
+    posti_letto = posti_letto.rename(columns=col_names)
+
+    dtype = {col: tp for col, tp in dtype.items() if col in posti_letto.columns}
+
+    stringlike = [col for col, tp in dtype.items() if tp == str]
+    numlike = [col for col, tp in dtype.items() if tp in (int, float)]
+
 
     # Adjust data
     posti_letto = posti_letto.replace("N.D.", "0")
@@ -88,22 +51,32 @@ def posti_letto_from_salutegov():
     # adjust dtypes
     posti_letto = posti_letto.astype(dtype)
 
-    print(posti_letto)
-    posti_letto.info(verbose=1)
+    if verbose > 0:
+        print(posti_letto)
+        posti_letto.info(verbose=verbose)
 
     return posti_letto
 
 
+# --- CLI ---
+
+
+@click.group()
+def cli():
+    pass
+
+
 @cli.command(name="prep_from_salutegovit")
 @click.option(
-    "--out_fp", default="./data/prepped/istat/2010-2019_posti_letto_by_province.csv"
+    "--out_fp", default="./data/interim/ministero-salute/2010-2019_posti_letto_by_province.csv"
 )
 def posti_letto_to_csv(out_fp):
-    posti_letto = posti_letto_from_salutegov()
+    posti_letto = parse_posti_letto()
     posti_letto.to_csv(out_fp, index=False)
 
 
 cli.add_command(posti_letto_to_csv)
+
 
 if __name__ == "__main__":
     cli()

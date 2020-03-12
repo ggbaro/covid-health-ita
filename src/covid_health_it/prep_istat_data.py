@@ -1,11 +1,8 @@
 import click
 import os
 import pandas as pd
-
-
-@click.group()
-def cli():
-    pass
+from .transcoding.names_map import col_names
+from .transcoding.metadata import dtype
 
 
 def population_df_from_csv(istat_population_csv_fp):
@@ -13,42 +10,41 @@ def population_df_from_csv(istat_population_csv_fp):
     return population_df
 
 
-def parse_data(population_df):
+def parse_population_prov(population_df):
+    if isinstance(population_df, str):
+        population_df = pd.read_csv(population_df)
+
+    population_df = population_df.rename(columns=col_names)
+
     # small bug
     population_df = population_df.loc[
-        population_df.Territory != "Trentino Alto Adige / Südtirol"
+        population_df["province"] != "Trentino Alto Adige / Südtirol"
     ]
     # fix province names
     population_df.loc[
-        population_df.Territory == "Valle d'Aosta / Vallée d'Aoste", "Territory"
+        population_df["province"] == "Valle d'Aosta / Vallée d'Aoste", "province"
     ] = "Aosta"
     population_df.loc[
-        population_df.Territory == "Bolzano / Bozen", "Territory"
+        population_df["province"] == "Bolzano / Bozen", "province"
     ] = "Bolzano"
     population_df.loc[
-        population_df.Territory == "Massa-Carrara", "Territory"
+        population_df["province"] == "Massa-Carrara", "province"
     ] = "Massa Carrara"
 
     # remove totals
-    population_df = population_df.loc[population_df.Gender != "total"]
-    population_df = population_df.loc[population_df.Age != "total"]
-    population_df = population_df.loc[population_df["Marital status"] != "total"]
+    population_df = population_df.loc[population_df["gender"] != "total"]
+    population_df = population_df.loc[population_df["age"] != "total"]
+    population_df = population_df.loc[population_df["marital_status"] != "total"]
 
     # rename to match
-    col_names = {
-        "Territory": "denominazione_provincia",
-        "Gender": "gender",
-        "Age": "age",
-        "Marital status	": "marital_status",
-        "Value": "population",
-    }
-    population_df = population_df.rename(columns=col_names)
 
     # extract age as number
     population_df.age = population_df.age.str.replace("[A-z ]+", "").astype(int)
 
     # filter specified columns
-    population_df = population_df.filter(col_names.values())
+    population_df = population_df.filter(
+        set([col for col in col_names.values() if col in population_df.columns])
+    )
 
     # add gender util multiplier to create pyramid plot
     population_df["gender_mult"] = [
@@ -58,17 +54,28 @@ def parse_data(population_df):
     return population_df
 
 
+# --- CLI ---
+
+
+@click.group()
+def cli():
+    pass
+
+
 @click.command(name="from_csv")
 @click.argument("source_csv_fp")
-@click.option("--out_fp", default="./data/prepped/istat/2019_population_by_province.csv")
+@click.option(
+    "--out_fp", default="./data/interim/istat/2019_population_by_province.csv"
+)
 def parse_istat_csv(source_csv_fp, out_fp):
     data = population_df_from_csv(source_csv_fp)
-    data = parse_data(data)
+    data = parse_population_prov(data)
     os.makedirs(os.path.dirname(out_fp), exist_ok=True)
     data.to_csv(out_fp, index=False)
 
 
 cli.add_command(parse_istat_csv)
+
 
 if __name__ == "__main__":
     cli()
