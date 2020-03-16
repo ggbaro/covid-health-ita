@@ -15,7 +15,7 @@ with open(path.join(here, "requirements-dev.txt"), encoding="utf-8") as f:
     dev_reqs = f.read().split("\n")
 
 setup(
-    name="covid-health-ita",
+    name="covid-health",
     version=__version__,
     description="",
     long_description=long_description,
@@ -36,6 +36,6 @@ setup(
     author_email="giacomo.barone@buildnn.com",
     entry_points="""
         [console_scripts]
-        covid-data=covid_health_it.cli:main
+        covid-data=covid_health.cli:main
     """,
 )
