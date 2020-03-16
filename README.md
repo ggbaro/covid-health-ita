@@ -37,23 +37,26 @@ Data Sources
 ------------
 
 #### World
-> | Category          | Name      | Type             | URL                  | cli |
-> |-------------------|-----------|------------------|----------------------|-----|
-> | Unofficial Web Source  | Worldometer  | Covid19 | [worldometers.info](https://www.worldometers.info/) | `$ covid-data worldometers` |
+
+| Category          | Name      | Type             | URL                  | cli |
+|-------------------|-----------|------------------|----------------------|-----|
+| Unofficial Web Source  | Worldometer  | Covid19 | [worldometers.info](https://www.worldometers.info/) | `$ covid-data worldometers` |
 
 #### Europe
-> | Category          | Name      | Type             | URL                  | cli |
-> |-------------------|-----------|------------------|----------------------|-----|
-> | Institutional DB  | Eurostat  | Open Data | [ec.europa.eu/eurostat](https://ec.europa.eu/eurostat) | `$ covid-data eurostat` |
+
+| Category          | Name      | Type             | URL                  | cli |
+|-------------------|-----------|------------------|----------------------|-----|
+| Institutional DB  | Eurostat  | Open Data | [ec.europa.eu/eurostat](https://ec.europa.eu/eurostat) | `$ covid-data eurostat` |
 
 #### Italy
+
 Submodule `covid_health.ita`
-> | Category          | Name      | Type      | URL                  | cli |
-> |-------------------|-----------|-----------|----------------------|-----|
-> | Insititutional DB | Istat     | Open Data | [dati.istat.it](http://dati.istat.it/) | `$ covid-data ita istat` |
-> | Institutional DB | Open Data della Pubblica Amministrazione Italiana - AGID | Health Open Data | [dati.gov.it](https://www.dati.gov.it/content/italian-open-data-license-v20) | `$ covid-data ita salute-gov` |
-> | Official Git Repo | Protezione Civile - COVID-19  | COVID-19 Data | [github.com/pcm-dpc/COVID-19](https://github.com/pcm-dpc/COVID-19) | `$ ` |
-> | Unofficial Git Repo | Covid19italia  | COVID-19 Data | [github.com/ondata/covid19italia](https://github.com/ondata/covid19italia) | `$ ` |
+| Category          | Name      | Type      | URL                  | cli |
+|-------------------|-----------|-----------|----------------------|-----|
+| Insititutional DB | Istat     | Open Data | [dati.istat.it](http://dati.istat.it/) | `$ covid-data ita istat` |
+| Institutional DB | Open Data della Pubblica Amministrazione Italiana - AGID | Health Open Data | [dati.gov.it](https://www.dati.gov.it/content/italian-open-data-license-v20) | `$ covid-data ita salute-gov` |
+| Official Git Repo | Protezione Civile - COVID-19  | COVID-19 Data | [github.com/pcm-dpc/COVID-19](https://github.com/pcm-dpc/COVID-19) | `$ ` |
+| Unofficial Git Repo | Covid19italia  | COVID-19 Data | [github.com/ondata/covid19italia](https://github.com/ondata/covid19italia) | `$ ` |
 
 
 Dimensions
