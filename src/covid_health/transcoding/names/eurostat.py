@@ -27,8 +27,6 @@ class EurostatDict:
 
         dic = dic.values.tolist()
 
-
-
         return dic
 
 

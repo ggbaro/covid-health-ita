@@ -95,6 +95,15 @@ datasets = {
 }
 
 
+def remove_number_notations(df):
+    mask = ~ df['value'].isna()
+    df = df[mask]
+    df.loc[:, "value"] = df.loc[:, "value"].str.replace("[a-zA-Z\: ]", "")
+    df = df.loc[df['value'] != ""]
+    df['value'] = df['value'].astype(float)
+    return df
+
+
 def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
     data = download_and_parse_gzip_csv(
         eurostat_gz_url, params={"file": f"data/{dataset_id}.tsv.gz"}
@@ -115,8 +124,12 @@ def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
 
     # dtype = {k: v for k, v in dtype.items() if k in data.columns}
     # data = data.astype(dtype)
+    data  = remove_number_notations(data)
 
-    print(data)
+    print(f"Parsing complete. Columns: {list(data.columns)}")
+    data.info(verbose=1)
+    print("Sample:")
+    print(data.head(2).T)
 
     return data
 
