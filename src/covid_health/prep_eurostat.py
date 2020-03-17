@@ -12,8 +12,7 @@ from .transcoding.metadata import dtype
 from .utils import download_and_parse_gzip_csv
 
 eurostat_gz_url = (
-    "https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/"
-    "BulkDownloadListing?file=data/{}.tsv.gz"
+    "https://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing"
 )
 
 datasets = {
@@ -21,7 +20,6 @@ datasets = {
     "demo_r_d2jan": "Population on 1 January by age, sex and NUTS 2 region",
     "demo_r_pjangrp3": "Population on 1 January by age group, sex and NUTS 3 region",
     "demo_r_d3dens": "Population density by NUTS 3 region",
-
     # HEALTH CARE EXPENDITURE
     "hlth_sha11_hp": "Health care expenditure by provider",
     "hlth_sha11_hc": "Health care expenditure by function",
@@ -29,7 +27,6 @@ datasets = {
     "hlth_sha11_hchp": "Expenditure for selected health care functions by health care providers",
     "hlth_sha11_hchf": "Expenditure for selected health care functions by health care financing schemes",
     "hlth_sha11_hphf": "Expenditure for selected health care providers by health care financing schemes",
-
     # HEALTH CARE PERSONNEL
     "hlth_rs_prshp1": "Health personnel employed in hospital",
     "hlth_rs_prsns": "Nursing and caring professionals",
@@ -39,7 +36,6 @@ datasets = {
     "hlth_rs_grd": "Health graduates",
     "hlth_rs_prs1": "Health personnel (excluding nursing and caring professionals)",
     "hlth_rs_wkmg": "Health workforce migration",
-
     # HEALTH CARE CAPACITY
     "hlth_rs_bds": "Hospital beds by type of care",
     "hlth_rs_bds2": "Hospital beds by hospital ownership",
@@ -47,7 +43,6 @@ datasets = {
     "hlth_rs_bdsns": "Long-term care beds in nursing and residential care facilities by NUTS 2 regions",
     "hlth_rs_tech": "Technical resources in hospital",
     "hlth_rs_equip": "Medical technology",
-
     # HOSPITALIZATION AND DIAGNOSES
     "hlth_co_dischls": "Hosp. discharges and length of stay for inpatient and curative care",
     "hlth_co_bedoc": "Curative care bed occupancy rate",
@@ -82,7 +77,6 @@ datasets = {
     "hlth_co_proc2": "Surgical operations and procedures performed in hospitals by ICD-9-CM",
     "hlth_co_exam": "Medical technologies - examinations by medical imaging techniques (CT, MRI and PET)",
     "hlth_co_ren": "End-stage renal failure (ESRF) patients",
-
     # MEDICAL CONSULTATIONS
     "hlth_ehis_am1e": "Self-reported time elapsed since last visit to a medical professional by sex, age and educational attainment level",
     "hlth_ehis_am2u": "Self-reported consultations of a medical professional by sex, age and degree of urbanisation",
@@ -102,8 +96,9 @@ datasets = {
 
 
 def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
-    url = eurostat_gz_url.format(dataset_id)
-    data = download_and_parse_gzip_csv(url)
+    data = download_and_parse_gzip_csv(
+        eurostat_gz_url, {"file": "data/{dataset_id}.tsv.gz"}
+    )
     data = pd.DataFrame(data)
     data.columns = [col.strip() for col in data.columns]
     data = data.replace(":", "").replace(": ", "")
@@ -113,15 +108,12 @@ def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
     other_cols = set(data.columns).difference(time_cols)
 
     data = data.melt(
-        id_vars=other_cols,
-        value_vars=time_cols,
-        var_name='time',
-        value_name='value',
+        id_vars=other_cols, value_vars=time_cols, var_name="time", value_name="value",
     )
 
-    data = data.rename(columns=col['eurostat'])
+    data = data.rename(columns=col["eurostat"])
     for col in data.columns:
-        repl = var['eurostat'].get(col, [(None, None)])
+        repl = var["eurostat"].get(col, [(None, None)])
         for replacement in repl:
             old, new = replacement
             if old and new:
@@ -172,7 +164,7 @@ def list_datasets():
 @click.option(
     "--ext",
     help="if no --out-fp specified, determines output format. "
-         "Allowed are `['.csv', '.csv.gz', '.csv.zip']`.",
+    "Allowed are `['.csv', '.csv.gz', '.csv.zip']`.",
     default=".csv",
 )
 def eurostat_to_csv(dataset_id, out_fp, ext):
