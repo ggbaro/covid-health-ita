@@ -1,16 +1,18 @@
 import os
 import requests
 import gzip
+import pandas as pd
 import csv
 from .transcoding.names.human import lang
 
 
 def map_names(item, language="it"):
     if isinstance(item, str):
-        return lang[language][item]
-    if hasattr(item, "rename"):
-        return item.rename(columns=lang[language])
-
+        return lang[language].get(item, item)
+    if isinstance(item, pd.DataFrame):
+        return item.rename(columns=lang[language]['col'])
+    if isinstance(item, pd.Series):
+        return item.replace(lang[language].get(item.name, {}))
 
 def download_and_parse_gzip_csv(url):
     response = requests.get(url)
