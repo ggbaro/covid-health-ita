@@ -97,7 +97,7 @@ datasets = {
 
 def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
     data = download_and_parse_gzip_csv(
-        eurostat_gz_url, {"file": "data/{dataset_id}.tsv.gz"}
+        eurostat_gz_url, params={"file": f"data/{dataset_id}.tsv.gz"}
     )
     data = pd.DataFrame(data)
     data.columns = [col.strip() for col in data.columns]
