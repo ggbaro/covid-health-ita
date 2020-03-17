@@ -1,9 +1,14 @@
+import re
 from os import path
-from setuptools import setup, find_namespace_packages
 
-__version__ = "0.0.1"
+from setuptools import find_namespace_packages, setup
+
 
 here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, "src", "covid_health", "__init__.py")) as init:
+    __version__ = re.findall('__version__ = "([\w\.\-\_]+)"', init.read())[0]
+
 
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
