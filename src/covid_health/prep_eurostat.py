@@ -112,12 +112,6 @@ def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
     )
 
     data = data.rename(columns=col["eurostat"])
-    for col in data.columns:
-        repl = var["eurostat"].get(col, [(None, None)])
-        for replacement in repl:
-            old, new = replacement
-            if old and new:
-                data[col] = data[col].replace(old, new)
 
     # dtype = {k: v for k, v in dtype.items() if k in data.columns}
     # data = data.astype(dtype)
