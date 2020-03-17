@@ -4,7 +4,7 @@ from .prep_salutegov import cli as salutegov
 from .prep_other_data import cli as other_data
 
 
-@click.group()
+@click.group(help="Datasets creation from Italian Data Sources.")
 def cli():
     pass
 

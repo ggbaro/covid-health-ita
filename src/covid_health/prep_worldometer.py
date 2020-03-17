@@ -54,7 +54,8 @@ def parse_worldometers_stats(
 # --- CLI ---
 
 
-@click.command(name="from-web", help="choose figure between {}".format(list(figures.keys())))
+@click.command(name="from-web", help="""Datasets creation from `worldometers.info`.
+    Choose figure between {}""".format(list(figures.keys())))
 @click.argument("figure")
 @click.option("--snapshot-date", default=f"{datetime.now():%Y%m%d%H}")
 @click.option("--out-dir", default="./data/interim/worldometers/",

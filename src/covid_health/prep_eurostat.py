@@ -152,7 +152,7 @@ def list_eurostat_datasets():
 # --- CLI ---
 
 
-@click.group()
+@click.group(help="Datasets creation from Eurostat.")
 def cli():
     pass
 
