@@ -1,5 +1,6 @@
 import click
 from .names.human import lang
+from .names.eurostat import EurostatDict
 
 
 def field_code_to_human(language, field):
@@ -28,6 +29,13 @@ en = ", ".join(lang['en'].keys())
 @click.group(help="Util tools and info for transcoding.")
 def cli():
     pass
+
+@cli.command(name="eurostat-std", help="Print code metadata for a certain field.")
+@click.argument("field")
+def list_eurostat_std_code(field):
+    dic = EurostatDict()[field]
+    for ix, (code, descr) in enumerate(dic):
+        print(f"[{ix:3d}] {code} -> {descr}")
 
 
 @cli.command(
