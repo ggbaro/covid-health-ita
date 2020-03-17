@@ -7,7 +7,7 @@ col = {
         "indic_he": "health_indicator",
         "geo": "NUTS",
         "time": "year",
-        "value": "population",
+        "value": "value",
     }
 }
 
