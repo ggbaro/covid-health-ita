@@ -13,7 +13,7 @@ figures = {
 def parse_covid_data(figure="dpc-province", dtype=dtype, col=col):
     covid_stats = pd.read_csv(figures[figure], parse_dates=["data"])
     if "denominazione_provincia" in covid_stats.columns:
-        df.loc[df.denominazione_provincia == "Napoli", "sigla_provincia"] = "NA"
+        covid_stats.loc[covid_stats.denominazione_provincia == "Napoli", "sigla_provincia"] = "NA"
     covid_stats = covid_stats.rename(columns=col)
     dtype = {k: v for k, v in dtype.items() if k in covid_stats.columns}
     covid_stats = covid_stats.astype(dtype)
