@@ -125,6 +125,12 @@ def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
     # dtype = {k: v for k, v in dtype.items() if k in data.columns}
     # data = data.astype(dtype)
     data  = remove_number_notations(data)
+    
+    if "time" in data.columns:
+        try:
+            data["time"] = pd.to_datetime(data["time"])
+        except:
+            pass
 
     print(f"Parsing complete. Columns: {list(data.columns)}")
     data.info(verbose=1)
