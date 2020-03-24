@@ -12,11 +12,18 @@ from ..transcoding.metadata import dtype
 from ..utils import download_csv, convert_dtype
 
 
-# url_posti_letto = "http://www.dati.salute.gov.it/imgs/C_17_dataset_18_0_upFile.csv"
 url_salute_gov = "http://www.dati.salute.gov.it/imgs/{}"
-# url_hospital_metadata = "http://www.dati.salute.gov.it/imgs/C_17_dataset_2_0_upFile.csv"
 
-figures = {"hospital_beds_by_discipline_hospital": "C_17_dataset_96_0_upFile.csv"}
+figures = {
+    "hospital_beds_by_discipline_hospital": "C_17_dataset_96_0_upFile.csv",
+    "asl_expenditure_by_device_2012": "C_17_dataset_63_download_itemDownload_0_upFile.zip",
+    "asl_expenditure_by_device_2013": "C_17_dataset_71_download_itemDownload_0_upFile.zip",
+    "asl_expenditure_by_device_2014": "C_17_dataset_78_download_itemDownload_0_upFile.zip",
+    "asl_expenditure_by_device_2015": "C_17_dataset_81_download_itemDownload_0_upFile.zip",
+    "asl_expenditure_by_device_2016": "C_17_dataset_91_download_itemDownload_0_upFile.zip",
+    "asl_expenditure_by_device_2017": "C_17_dataset_97_download_itemDownload_0_upFile.zip",
+    # "health_expenditure_by_device": "C_17_dataset_1_download_itemDownload0_upFile.zip",
+}
 
 
 def parse_dataset(
