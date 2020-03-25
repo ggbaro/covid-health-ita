@@ -1,30 +1,52 @@
-import os
-import requests
-import gzip
-import pandas as pd
 import csv
+import gzip
+import io
+import os
+import zipfile
+
+import pandas as pd
+import requests
+
 from .transcoding.names.human import lang
 
 
 def map_names(item, language="it", source="eurostat"):
     if isinstance(item, str):
-        return lang[language].get(item, item)
+        return lang[language]['col'].get(item, item)
     if isinstance(item, pd.DataFrame):
         return item.rename(columns=lang[language]["col"])
     if isinstance(item, pd.Series):
         if source == "eurostat":
             from .transcoding.names.eurostat import var
+
             return item.replace(dict(var["eurostat"][item.name]))
         else:
             return item.replace(lang[language].get(item.name, {}))
 
 
-def download_and_parse_gzip_csv(url, params: dict = {}):
+def download_and_parse_gzip_csv(url, params: dict = {}, delimiter="\t", eurostat=True):
     response = requests.get(url, params=params)
     data = gzip.decompress(response.content).decode()
-    data = data.replace(",", "\t")
-    data = csv.DictReader(data.split("\n"), delimiter="\t")
+    if eurostat:
+        data = data.replace(",", delimiter)
+    data = csv.DictReader(data.split("\n"), delimiter=delimiter)
     return data
+
+
+def download_and_parse_zip_csv(url, encoding="utf-8", delimiter="\t"):
+    """
+    Download a ZIP file and extract its contents in memory
+    yields (filename, file-like object) pairs
+    """
+    response = requests.get(url)
+    with zipfile.ZipFile(io.BytesIO(response.content)) as zipio:
+        for zipinfo in zipio.infolist():
+            with zipio.open(zipinfo) as file:
+                data = csv.DictReader(
+                    [line.decode(encoding) for line in file.readlines()],
+                    delimiter=delimiter,
+                )
+                return data
 
 
 def download_csv(url):
@@ -52,4 +74,3 @@ def parse_pivoted(df, value_name):
 
 def convert_dtype(df, dtype):
     return df.astype({col: dtype.get(col, dt) for col, dt in df.dtypes.items()})
-
