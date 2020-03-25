@@ -12,7 +12,21 @@ lang = {
             "discipline": "Disciplina",
             "latitude": "Latitudine",
             "longitude": "Longitudine",
-            "NUTS": "Area Geografica"
+            "NUTS": "Area Geografica",
+            "time": "Data",
+            "country": "Nazione",
+            "n_hospitalized": "N. Ospedalizzati",
+            "n_intensive_care": "N. Ricoverati in Terapia Intensiva",
+            "tot_n_hospitalized": "Totale Ospedalizzati",
+            "n_home_quarantine": "N. Casi in Autoquarantena",
+            "n_active_cases": "N. Casi Attivi",
+            "n_new_cases": "N. Nuovi Casi",
+            "n_discharged_recovered": "N. Guariti",
+            "n_deceased": "N. Deceduti",
+            "tot_n_cases": "Totale Casi",
+            "n_tested": "Totale Tamponi Effettuati",
+            "epidemic_start": "Data di Inizio del Contagio",
+            "epidemic_age": "N. Giorni Trascorsi dall'Inzio del Contagio",
         },
         "age": {
             "TOTAL": "total",
@@ -38,7 +52,7 @@ lang = {
             "Y_GE90": "90+",
             "Y_LT5": "0-5",
         },
-        "diagnosis_icd10": {
+        "icd10": {
             "A-T_Z": "All causes of diseases (A00-Z99) excluding V00-Y98",
             "A-T_Z_XNB": "All causes of diseases (A00-Z99) excluding V00-Y98 and Z38",
             "A_B": "Certain infectious and parasitic diseases (A00-B99)",
@@ -190,7 +204,7 @@ lang = {
             "Z51": "Other medical care",
             "Z_OTH": "Other factors influencing health status and contact with health services (remainder of Z00-Z99)",
         },
-        "NUTS": {
+        "geo": {
             "EU27_2020": "European Union - 27 countries (from 2020)",
             "EU28": "European Union - 28 countries (2013-2020)",
             "EU27_2007": "European Union - 27 countries (2007-2013)",

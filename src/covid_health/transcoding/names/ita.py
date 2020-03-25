@@ -3,7 +3,7 @@ col = {
         # dpc province
         'codice_provincia': 'province_code',
         'codice_regione': 'region_code',
-        'data': 'date',
+        'data': 'time',
         'denominazione_provincia': 'province',
         'denominazione_regione': 'region',
         'lat': 'latitude',
@@ -14,20 +14,30 @@ col = {
     },
     'dpc-regions': {
         # dpc regions
+        'codice_provincia': 'province_code',
+        'codice_regione': 'region_code',
+        'data': 'time',
         'deceduti': 'n_deceased',
+        'denominazione_provincia': 'province',
+        'denominazione_regione': 'region',
         'dimessi_guariti': 'n_discharged_recovered',
+        'lat': 'latitude',
+        'long': 'longitude',
         'isolamento_domiciliare': 'n_home_quarantine',
         'nuovi_attualmente_positivi': 'n_new_cases',
         'ricoverati_con_sintomi': 'n_hospitalized',
+        'sigla_provincia': 'province_short',
+        'stato': 'country',
         'tamponi': 'n_tested',
-        'terapia_intensiva': 'n_intensive_care',
         'totale_attualmente_positivi': 'n_active_cases',
+        'totale_casi': 'tot_n_cases',
+        'terapia_intensiva': 'n_intensive_care',
         'totale_ospedalizzati': 'tot_n_hospitalized',
     },
 
     "hospital_beds_by_discipline_hospital": {
         # salute.gov.it/dataset_96 hospital_beds_by_discipline_hospital
-        "Anno": "year",
+        "Anno": "time",
         "Codice Regione": "region_code",
         "Descrizione Regione": "region",
         "Codice Azienda": "asl_code",
@@ -53,7 +63,7 @@ col = {
     },
     "salutegov-2": {
         # salute.gov.it/dataset_96 posti letto disciplina
-        'ANNO': "year",
+        'ANNO': "time",
         'CODICE REGIONE': "region_code",
         'DENOMINAZIONE REGIONE': "region",
         'CODICE AZIENDA': "asl_code",
@@ -70,17 +80,18 @@ col = {
     },
     'istat': {
         # Istat population by province, gender, age
-        "ITTER107": "NUTS",
-        "TIPO_DATO15": "data_type",
+        "ITTER107": "geo",
         "ETA1": "age_id",
         "STATCIV2": "marital_status_id",
         "SEXISTAT1": "gender_id",
-        "Territory": "province",
+        "Territory": "geo_name",
+        "Data type": "data_type",
         "Gender": "gender",
         "Age": "age",
         "Marital status": "marital_status",
         "Value": "value",
         "TIME": "time",
+        "Underlying cause of death - European Short List": "cause_of_death",
     }
 
 }
@@ -88,9 +99,10 @@ col = {
 
 var = {
     "istat": [
-        ("province", "Valle d'Aosta / Vallée d'Aoste", "Aosta"),
-        ("province", "Bolzano / Bozen", "Bolzano"),
-        ("province", "Massa-Carrara", "Massa Carrara"),
+        # ("geo_name", "Valle d'Aosta / Vallée d'Aoste", "Aosta"),
+        # ("geo", "ITC20", "Aosta"),
+        ("geo_name", "Bolzano / Bozen", "Bolzano"),
+        ("geo_name", "Massa-Carrara", "Massa Carrara"),
         ("genders", "males", "male"),
         ("genders", "females", "female"),
         ("age", "[A-z ]+", ""),

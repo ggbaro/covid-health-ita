@@ -12,7 +12,7 @@ from .transcoding.names.human import lang
 
 def map_names(item, language="it", source="eurostat"):
     if isinstance(item, str):
-        return lang[language].get(item, item)
+        return lang[language]['col'].get(item, item)
     if isinstance(item, pd.DataFrame):
         return item.rename(columns=lang[language]["col"])
     if isinstance(item, pd.Series):
