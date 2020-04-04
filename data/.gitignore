@@ -1,6 +1,5 @@
 raw/*
 prepped/*/
-external/*
 interim/*
 !prepped/istat/
 !prepped/ministero-salute/

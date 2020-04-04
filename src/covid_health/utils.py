@@ -12,7 +12,7 @@ from .transcoding.names.human import lang
 
 def map_names(item, language="it", source="eurostat"):
     if isinstance(item, str):
-        return lang[language]['col'].get(item, item)
+        return lang[language]["col"].get(item, item)
     if isinstance(item, pd.DataFrame):
         return item.rename(columns=lang[language]["col"])
     if isinstance(item, pd.Series):
@@ -24,12 +24,14 @@ def map_names(item, language="it", source="eurostat"):
             return item.replace(lang[language].get(item.name, {}))
 
 
-def download_and_parse_gzip_csv(url, params: dict = {}, delimiter="\t", eurostat=True):
+def download_and_parse_gzip_csv(
+    url, params: dict = {}, delimiter="\t", eurostat=True, skiprows: int = 0
+):
     response = requests.get(url, params=params)
     data = gzip.decompress(response.content).decode()
     if eurostat:
         data = data.replace(",", delimiter)
-    data = csv.DictReader(data.split("\n"), delimiter=delimiter)
+    data = csv.DictReader(data.split("\n")[skiprows:], delimiter=delimiter)
     return data
 
 
