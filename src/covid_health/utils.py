@@ -51,10 +51,10 @@ def download_and_parse_zip_csv(url, encoding="utf-8", delimiter="\t"):
                 return data
 
 
-def download_csv(url):
+def download_csv(url, encoding="utf-8", delimiter=","):
     response = requests.get(url)
     data = csv.DictReader(
-        [line.decode("latin-1") for line in response.iter_lines()], delimiter=";"
+        [line.decode(encoding) for line in response.iter_lines()], delimiter=delimiter
     )
     return data
 
