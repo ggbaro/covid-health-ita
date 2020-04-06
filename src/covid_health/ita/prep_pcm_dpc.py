@@ -12,6 +12,10 @@ figures = {
 
 
 def parse_covid_data(figure="dpc-province", dtype=dtype, col=col):
+    if not figure in figures.keys():
+        raise NotImplementedError(
+            f"Figure '{figure}' not regognized.\nChoose one of {figures.keys()}"
+        )
     df = pd.read_csv(figures[figure], parse_dates=["data"])
     df = df.rename(columns=col[figure])
     if "province_code" in df.columns:
