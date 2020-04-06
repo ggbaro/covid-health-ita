@@ -34,7 +34,7 @@ col = {
         "terapia_intensiva": "n_intensive_care",
         "totale_ospedalizzati": "tot_n_hospitalized",
     },
-    "hospital_beds_by_discipline_hospital": {
+    "salutegov": {
         # salute.gov.it/dataset_96 hospital_beds_by_discipline_hospital
         "Anno": "time",
         "Codice Regione": "region_code",
@@ -59,9 +59,6 @@ col = {
         "Posti letto Day Hospital": "n_hospital_bed_dayhospital",
         "Posti letto Day Surgery": "n_hospital_bed_daysurgery",
         "Totale posti letto": "tot_n_hospital_bed",
-    },
-    "salutegov-2": {
-        # salute.gov.it/dataset_96 posti letto disciplina
         "ANNO": "time",
         "CODICE REGIONE": "region_code",
         "DENOMINAZIONE REGIONE": "region",
@@ -76,6 +73,14 @@ col = {
         "E-MAIL": "email",
         "SITO WEB": "website",
         "PARTITA IVA": "vat",
+        "Anno": "time",
+        "Semestre": "semester",
+        "CodiceRegione": "region_code",
+        "Regione": "region",
+        "Codice AS": "asl_code",
+        "AziendaSanitaria": "asl_name",
+        "NumRepertorio": "catalog_number",
+        "Spesa": "expenditure",
     },
     "istat": {
         # Istat population by province, gender, age
