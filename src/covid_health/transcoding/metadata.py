@@ -12,6 +12,7 @@ dtype = {
     "discipline_id": str,
     "discipline_type": str,
     "email": str,
+    "expenditure": float,
     "fax": str,
     "gender": str,
     "hospital_id": str,
