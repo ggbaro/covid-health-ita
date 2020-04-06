@@ -8,4 +8,4 @@ install:
   - pip install .[dev]
 # command to run tests
 script:
-  - pytest --cov=src -n 4 tests
+  - pytest --cov=src tests
