@@ -8,25 +8,20 @@ from covid_health.utils import download_and_parse_gzip_csv, download_and_parse_z
 
 
 url_istat = "http://dati.istat.it/DownloadFiles.aspx?&DatasetCode={}&Lang=IT"
-
 figures = {
     "death_causes": url_istat.format("DCIS_CMORTE1_RES"),
 }
-
 gz_figures = {
     "2019_pop_regions": "http://demo.istat.it/pop2019/dati/regioni.gz",
     "2018_pop_regions": "http://demo.istat.it/pop2018/dati/regioni.gz",
     "2019_pop_province": "http://demo.istat.it/pop2019/dati/province.gz",
 }
-
-
 daily_deaths = "https://www.istat.it/it/files//2020/03/dati-comunali-giornalieri-1.zip"
+col = col["istat"]
+dtype = dtype
 
 
-figure = "2018_pop_regions"
-
-
-def parse_istat_geodemo(figure, dtype=dtype, col=col["istat"]):
+def parse_istat_geodemo(figure):
     """Extract one of {}
     """.format(
         list(gz_figures.keys())
@@ -54,7 +49,7 @@ def parse_istat_geodemo(figure, dtype=dtype, col=col["istat"]):
 def parse_daily_deaths():
     df = pd.DataFrame(
         download_and_parse_zip_csv(daily_deaths, encoding="latin-1", delimiter=",")
-    ).rename(columns=col["istat"])
+    ).rename(columns=col)
     dtype = {
         "region_code": "category",
         "province_code": "category",
@@ -65,7 +60,6 @@ def parse_daily_deaths():
         "age": "category",
         "GE": str,
     }
-    col["istat"]
     dtype.update(
         {col: float for col in df.filter(regex="^MASCHI|FEMMINE|TOTALE").columns}
     )
@@ -114,12 +108,12 @@ def parse_daily_deaths():
     return df, (tot_reporting,)
 
 
-def parse_istat_dataset(df, col=col, dtype=dtype):
+def parse_istat_dataset(df):
 
     if isinstance(df, str):
         df = pd.read_csv(df, dtype={"Codice Comune": str}, parse_dates=["TIME"])
 
-    df = df.rename(columns=col["istat"])
+    df = df.rename(columns=col)
 
     for column, old, new in var["istat"]:
         if column in df.columns:
@@ -129,7 +123,7 @@ def parse_istat_dataset(df, col=col, dtype=dtype):
     #     df = df.loc[df[column] != "total"]
 
     # filter specified columns
-    df = df.loc[:, set(col["istat"].values()).intersection(df.columns)]
+    df = df.loc[:, set(col.values()).intersection(df.columns)]
 
     print(df)
 

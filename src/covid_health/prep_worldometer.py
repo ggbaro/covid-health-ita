@@ -12,9 +12,10 @@ worldometer_covid_url = (
 figures = dict(
     age_sex_demographics="coronavirus-age-sex-demographics", countries="#countries",
 )
+col=col
 
 
-def prepare_worldometers_table(df, figure, col=col):
+def prepare_worldometers_table(df, figure):
     df = df.rename(columns=col[figure])
 
     val_replacements = val[figure]
