@@ -5,7 +5,8 @@ python:
   - "3.8"
 # command to install dependencies
 install:
-  - pip install .[dev]
+  - pip install pytest pytest-cov
+  - pip install .
 # command to run tests
 script:
   - pytest --cov=src tests
