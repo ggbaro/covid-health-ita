@@ -107,6 +107,9 @@ col = {
         "NOME_PROVINCIA": "province",
         "NOME_COMUNE": "municipality",
         "COD_PROVCOM": "prov_town_code",
+        "Codice comune": "prov_town_code",
+        "Codice provincia": "province_code",
+        "Denominazione": "municipality",
         "CL_ETA": "age",
     },
 }

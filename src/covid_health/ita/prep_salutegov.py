@@ -28,13 +28,11 @@ figures = {
     "asl_expenditure_by_device_2017": "C_17_dataset_97_download_itemDownload_0_upFile.zip",
     "asl_comuni_pop": "C_17_dataset_3_0_upFile.csv",
 }
-
+col = col["salutegov"]
 
 def parse_dataset(
     figure="hospital_beds_by_discipline_hospital",
     verbose=0,
-    col=col["salutegov"],
-    dtype=dtype,
 ):
     if not figure in figures.keys():
         raise NotImplementedError(
@@ -51,9 +49,9 @@ def parse_dataset(
 
     df = df.rename(columns=col)
 
-    dtype = {col: tp for col, tp in dtype.items() if col in df.columns}
-    stringlike = [col for col, tp in dtype.items() if tp == str]
-    numlike = [col for col, tp in dtype.items() if tp in (int, float)]
+    dtype_ = {col: tp for col, tp in dtype.items() if col in df.columns}
+    stringlike = [col for col, tp in dtype_.items() if tp == str]
+    numlike = [col for col, tp in dtype_.items() if tp in (int, float)]
 
     # Adjust data
     df = df.replace("N.D.", "0")
@@ -67,13 +65,13 @@ def parse_dataset(
         df[field] = df[field].str.replace(r".", r"").str.replace(r",", r".")
 
     # adjust dtypes
-    df = df.astype(dtype)
+    df = df.astype(dtype_)
 
     if verbose > 0:
         print(df)
         df.info(verbose=verbose)
 
-    df = convert_dtype(df, dtype)
+    df = convert_dtype(df, dtype_)
 
     return df
 

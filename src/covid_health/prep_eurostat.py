@@ -93,6 +93,8 @@ datasets = {
     "hlth_ehis_hc5": "Self-reported consultation of a medical professional by sex, age and educational attainment level (%)",
     "hlth_ehis_hc6": "Self-reported consultation of a psychologist or physiotherapist by sex, age and educational attainment level (%)",
 }
+col=col["eurostat"]
+dtype=dtype
 
 
 def remove_number_notations(df):
@@ -104,7 +106,7 @@ def remove_number_notations(df):
     return df
 
 
-def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
+def parse_eurostat_dataset(dataset_id):
     data = download_and_parse_gzip_csv(
         eurostat_gz_url, params={"file": f"data/{dataset_id}.tsv.gz"}
     )
@@ -120,7 +122,7 @@ def parse_eurostat_dataset(dataset_id, dtype=dtype, col=col):
         id_vars=other_cols, value_vars=time_cols, var_name="time", value_name="value",
     )
 
-    data = data.rename(columns=col["eurostat"])
+    data = data.rename(columns=col)
 
     # dtype = {k: v for k, v in dtype.items() if k in data.columns}
     # data = data.astype(dtype)
