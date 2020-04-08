@@ -9,7 +9,7 @@ from covid_health.ita import (
 
 # ISTAT
 @pytest.mark.parametrize(
-    "figure", ["2019_pop_regions", "2018_pop_regions", "2019_pop_province"],
+    "figure", ["2019_pop_regions", "2018_pop_regions", "2019_pop_provinces"],
 )
 def test_istat_geodemo(figure):
     result = prep_istat.parse_istat_geodemo(figure)
