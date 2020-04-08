@@ -3,7 +3,7 @@ col = {
         "year": "year",
         "month": "month",
         "day": "day",
-        "cases": "tot_n_cases",
+        "cases": "active_cases",
         "deaths": "n_deceased",
         "countriesAndTerritories": "geo",
         "geoId": "geo_id",
