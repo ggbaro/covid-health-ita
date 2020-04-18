@@ -39,6 +39,7 @@ dtype = {
     "phone": str,
     "population": float,
     "pre_medical_condition": str,
+    "prov_town_code": str,
     "province": str,
     "province_code": str,
     "province_short": str,

@@ -55,6 +55,7 @@ def parse_istat_geodemo(figure):
             "age",
             "region",
             "province",
+            "province_code",
             "municipality",
             "prov_town_code",
         }.intersection(df.columns),
